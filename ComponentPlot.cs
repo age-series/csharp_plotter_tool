@@ -8,12 +8,12 @@ internal sealed class ComponentPlot
 	{
 		Console.Clear();
 
-		var smallestX = Components.OrderBy(x => x.x).First().x;
-		var largestX = Components.OrderByDescending(x => x.x).First().x;
+        var smallestX = Components.MinBy(x => x.x)!.x;
+        var largestX = Components.MaxBy(x => x.x)!.x;
 		var width = largestX - smallestX;
 		width = width == 0 ? 1 : width;
 
-		var largestY = Components.OrderByDescending(x => x.y).First().y + 2;
+		var largestY = Components.MaxBy(x => x.y)!.y + 2;
 
 		var color = 1;
 
@@ -43,17 +43,9 @@ internal sealed class ComponentPlot
 			}
 
 			Console.ForegroundColor = GenerateColor();
-			var count = 0;
-			
-			if (history.ContainsKey(component.symbol))
-			{
-				count = history[component.symbol];
-				history[component.symbol] = count + 1;
-			}
-			else
-			{
-				history.Add(component.symbol, 1);
-			}
+
+			var count = history.GetValueOrDefault(component.symbol, 0);
+			history[component.symbol] = count + 1;
 			
 			Console.Write($"{component.symbol}{count}");
 

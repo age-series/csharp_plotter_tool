@@ -47,7 +47,7 @@ internal class HttpPlotter
 	{
 		try
 		{
-			Console.Title = ("Handling data!");
+			Console.Title = "Handling data!";
 
 			var cells = JsonSerializer.Deserialize<JsonFrame>(data)!.cells;
 
